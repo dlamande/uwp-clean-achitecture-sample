@@ -1,33 +1,25 @@
 ﻿using ChuckNorrisFact.Interactors;
-using System.Linq;
-using System.Threading.Tasks;
+using ChuckNorrisFact.Repositories.Entities;
+using System.Collections.Generic;
 
 namespace ChuckNorrisFact
 {
-    public class ChuckNorrisPresenter
+    public class ChuckNorrisPresenter : IChuckNorrisPresenter
     {
-        private IChuckNorrisInteractor _interactor;
         private IChuckNorrisView _view;
 
-        public ChuckNorrisPresenter(IChuckNorrisView view, IChuckNorrisInteractor interactor)
+        public ChuckNorrisPresenter(IChuckNorrisView view)
         {
             _view = view;
-            _interactor = interactor;
         }
 
-        public async Task Load()
+        public void PresentJokoes(IList<ChuckNorrisJoke> Jokes)
         {
-            await Task.Delay(2000);
-            _view.DisplayLoader();
-            var jokesTask = await _interactor.Jokes();
-            await Task.Delay(2000);
             _view.DisplayJokes(new JokesViewModel
             {
-                NbJokesLabel = string.Format("There is {0} joke(s)", jokesTask.Count()),
-                Jokes = jokesTask
+                NbJokesLabel = string.Format("There is {0} joke(s)", Jokes.Count),
+                Jokes = Jokes
             });
-
-            _view.HideLoader();
         }
     }
 }

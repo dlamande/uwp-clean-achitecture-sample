@@ -1,6 +1,7 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using ChuckNorrisFact.Repositories.Entities;
 using ChuckNorrisFact.Tests.Mock;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System.Collections.Generic;
 
 namespace ChuckNorrisFact.Tests
 {
@@ -10,21 +11,15 @@ namespace ChuckNorrisFact.Tests
         private ChuckNorrisPresenter _presenter;
 
         [TestMethod]
-        public void TestLoad_Nominal_Case()
+        public void TestPresentJokoes_Nominal_Case()
         {
             var view = new MockChuckNorrisView();
-            _presenter = new ChuckNorrisPresenter(view, new MockChuckNorrisInteractor());
-            var task = _presenter.Load();
-
-            task.Wait();
-
-            Assert.AreEqual(1, view.GetQueue().Dequeue(), 1);
-            Assert.AreEqual(2, view.GetQueue().Dequeue(), 2);
-            Assert.AreEqual(3, view.GetQueue().Dequeue(), 3);
+            _presenter = new ChuckNorrisPresenter(view);
+            _presenter.PresentJokoes(new List<ChuckNorrisJoke> { new ChuckNorrisJoke() });
 
             var jokeViewModel = view.GetJokesViewModel();
 
-            Assert.AreEqual(1, jokeViewModel.Jokes.Count, 1);
+            Assert.AreEqual(1, jokeViewModel.Jokes.Count);
             Assert.AreEqual("There is 1 joke(s)", jokeViewModel.NbJokesLabel);
         }
     }

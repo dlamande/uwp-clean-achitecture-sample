@@ -1,6 +1,5 @@
-﻿using System;
+﻿using ChuckNorrisFact.Interactors.Tests.Mock;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ChuckNorrisFact.Interactors.Tests.Mock;
 using System.Threading.Tasks;
 
 namespace ChuckNorrisFact.Interactors.Tests
@@ -11,12 +10,13 @@ namespace ChuckNorrisFact.Interactors.Tests
         [TestMethod]
         public async Task ChuckNorrisInteractorTest_Normal_Case()
         {
-            ChuckNorrisInteractor chuckNorrisInteractor = new ChuckNorrisInteractor(new MockApiQuery());
-            var jokes = await chuckNorrisInteractor.Jokes();
-            Assert.IsNotNull(jokes);
-            Assert.AreEqual(2,jokes.Count);
-            Assert.AreEqual("A new joke", jokes[0].Label);
-            Assert.AreEqual("some joke", jokes[1].Label);
+            var mockChuckNorrisPresenter = new MockChuckNorrisPresenter();
+            ChuckNorrisInteractor chuckNorrisInteractor = new ChuckNorrisInteractor(mockChuckNorrisPresenter, new MockApiQuery());
+            await chuckNorrisInteractor.FetchJokes();
+            Assert.IsNotNull(mockChuckNorrisPresenter.Jokes);
+            Assert.AreEqual(2, mockChuckNorrisPresenter.Jokes.Count);
+            Assert.AreEqual("A new joke", mockChuckNorrisPresenter.Jokes[0].Label);
+            Assert.AreEqual("some joke", mockChuckNorrisPresenter.Jokes[1].Label);
         }
     }
 }

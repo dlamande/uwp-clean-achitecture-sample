@@ -8,15 +8,20 @@ namespace ChuckNorrisFact.Interactors
 {
     public class ChuckNorrisInteractor : IChuckNorrisInteractor
     {
+        private IChuckNorrisPresenter _presenter;
         private IApiQuery<ChuckNorrisJoke> _repos;
-        public ChuckNorrisInteractor(IApiQuery<ChuckNorrisJoke> repos)
+
+        public ChuckNorrisInteractor(IChuckNorrisPresenter presenter, IApiQuery<ChuckNorrisJoke> repos)
        { 
             _repos = repos;
+            _presenter = presenter;
         }
 
-        public async Task<IList<ChuckNorrisJoke>> Jokes()
+        public async Task FetchJokes()
         {
-            return (await _repos.Query()).OrderBy(joke => joke.Label).ToList();
+            var jokes = (await _repos.Query()).OrderBy(joke => joke.Label).ToList();
+
+            _presenter.PresentJokoes(jokes);
         }
     }
 }
