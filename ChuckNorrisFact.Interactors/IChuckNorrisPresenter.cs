@@ -5,6 +5,8 @@ namespace ChuckNorrisFact.Interactors
 {
     public interface IChuckNorrisPresenter
     {
-        void PresentJokoes(IList<ChuckNorrisJoke> Jokes);
+        void PresentJokes(IList<ChuckNorrisJoke> Jokes);
+        void PresentJokesSortedByZA(IList<ChuckNorrisJoke> Jokes);
+
     }
 }

@@ -4,24 +4,24 @@ using Windows.UI.Xaml.Controls;
 
 namespace ChuckNorrisFact
 {
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     public sealed partial class MainPage : Page, IChuckNorrisView
     {
         private ChuckNorrisInteractor _interactor;
+        private bool _isOrderByAz = true;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
-            
-             _interactor = new ChuckNorrisInteractor(new ChuckNorrisPresenter(this), new ApiQuery(new HttpClientImpl()));
+
+            _interactor = new ChuckNorrisInteractor(new ChuckNorrisPresenter(this), new ApiQuery(new HttpClientImpl()));
         }
 
         private void MainPage_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             DisplayLoader();
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             _interactor.FetchJokes();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         public void DisplayJokes(JokesViewModel jokeViewModel)
@@ -38,6 +38,22 @@ namespace ChuckNorrisFact
         private void HideLoader()
         {
             progressRing.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+        }
+
+        private void AppBarButtonSort_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DisplayLoader();
+
+            if (_isOrderByAz)
+            {
+                _interactor.FetchJokensOrderByZA();
+            }
+            else
+            {
+                _interactor.FetchJokes();
+            }
+
+            _isOrderByAz = !_isOrderByAz;
         }
     }
 }

@@ -13,7 +13,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding NbJokesLabel}"/>
 
         <ListView Grid.Row="1" ItemsSource="{Binding Jokes}">
             <ListView.ItemTemplate>
@@ -24,5 +23,17 @@
         </ListView>
 
         <ProgressBar x:Name="progressRing" Grid.Row="1"  Visibility="Collapsed" IsIndeterminate="True"/>
+
+        <CommandBar>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Sort" Label="Sort" Click="AppBarButtonSort_Click"/>
+        </CommandBar>
+
+        <StackPanel HorizontalAlignment="Left">
+            <TextBlock x:Name="titleTextBlock" Text="{Binding Title}"/>
+            <TextBlock x:Name="subTitleTextBlock" Text="{Binding NbJokesLabel}"/>
+        </StackPanel>
     </Grid>
+   
+
 </Page>

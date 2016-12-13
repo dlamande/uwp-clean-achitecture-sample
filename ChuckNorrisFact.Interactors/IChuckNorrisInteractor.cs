@@ -5,5 +5,7 @@ namespace ChuckNorrisFact.Interactors
     public interface IChuckNorrisInteractor
     {
         Task FetchJokes();
+
+        Task FetchJokensOrderByZA();
     }
 }

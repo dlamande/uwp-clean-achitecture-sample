@@ -1,8 +1,7 @@
 ﻿using ChuckNorrisFact.Repositories.ApiRepository;
 using ChuckNorrisFact.Repositories.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChuckNorrisFact.Interactors
 {
@@ -12,7 +11,7 @@ namespace ChuckNorrisFact.Interactors
         private IApiQuery<ChuckNorrisJoke> _repos;
 
         public ChuckNorrisInteractor(IChuckNorrisPresenter presenter, IApiQuery<ChuckNorrisJoke> repos)
-       { 
+        {
             _repos = repos;
             _presenter = presenter;
         }
@@ -20,8 +19,13 @@ namespace ChuckNorrisFact.Interactors
         public async Task FetchJokes()
         {
             var jokes = (await _repos.Query()).OrderBy(joke => joke.Label).ToList();
+            _presenter.PresentJokes(jokes);
+        }
 
-            _presenter.PresentJokoes(jokes);
+        public async Task FetchJokensOrderByZA()
+        {
+            var jokes = (await _repos.Query()).OrderByDescending(joke => joke.Label).ToList();
+            _presenter.PresentJokesSortedByZA(jokes);
         }
     }
 }

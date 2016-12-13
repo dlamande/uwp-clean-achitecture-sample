@@ -11,7 +11,7 @@ namespace ChuckNorrisFact.Interactors.Tests.Mock
     {
         public IList<ChuckNorrisJoke> Jokes { get; set; }
 
-        public void PresentJokoes(IList<ChuckNorrisJoke> jokes)
+        public void PresentJokes(IList<ChuckNorrisJoke> jokes)
         {
             this.Jokes = jokes;
         }

@@ -1,4 +1,6 @@
-﻿namespace ChuckNorrisFact.Tests.Mock
+﻿using System;
+
+namespace ChuckNorrisFact.Tests.Mock
 {
     public class MockChuckNorrisView : IChuckNorrisView
     {

@@ -13,13 +13,27 @@ namespace ChuckNorrisFact
             _view = view;
         }
 
-        public void PresentJokoes(IList<ChuckNorrisJoke> Jokes)
+        public void PresentJokes(IList<ChuckNorrisJoke> jokes)
         {
-            _view.DisplayJokes(new JokesViewModel
+            var viewModel = BuildViewModel(jokes);
+            viewModel.Title = "This list is sorted by [A-Z]";
+            _view.DisplayJokes(viewModel);
+        }
+
+        public void PresentJokesSortedByZA(IList<ChuckNorrisJoke> jokes)
+        {
+            var viewModel = BuildViewModel(jokes);
+            viewModel.Title = "This list is sorted by [Z-A]";
+            _view.DisplayJokes(viewModel);
+        }
+
+        private JokesViewModel BuildViewModel(IList<ChuckNorrisJoke> jokes)
+        {
+            return new JokesViewModel
             {
-                NbJokesLabel = string.Format("There is {0} joke(s)", Jokes.Count),
-                Jokes = Jokes
-            });
+                NbJokesLabel = string.Format("There is {0} joke(s)", jokes.Count),
+                Jokes = jokes,
+            };
         }
     }
 }

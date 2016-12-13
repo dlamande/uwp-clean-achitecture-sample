@@ -15,12 +15,27 @@ namespace ChuckNorrisFact.Tests
         {
             var view = new MockChuckNorrisView();
             _presenter = new ChuckNorrisPresenter(view);
-            _presenter.PresentJokoes(new List<ChuckNorrisJoke> { new ChuckNorrisJoke() });
+            _presenter.PresentJokes(new List<ChuckNorrisJoke> { new ChuckNorrisJoke() });
 
             var jokeViewModel = view.GetJokesViewModel();
 
             Assert.AreEqual(1, jokeViewModel.Jokes.Count);
             Assert.AreEqual("There is 1 joke(s)", jokeViewModel.NbJokesLabel);
+            Assert.AreEqual("This list is sorted by [A-Z]", jokeViewModel.Title);
+        }
+
+        [TestMethod]
+        public void GivenChuckNorrisJoke_WhenPresentJokesSortedByZA_ThenViewModelShouldBeBuild()
+        {
+            var view = new MockChuckNorrisView();
+            _presenter = new ChuckNorrisPresenter(view);
+            _presenter.PresentJokesSortedByZA(new List<ChuckNorrisJoke> { new ChuckNorrisJoke() });
+
+            var jokeViewModel = view.GetJokesViewModel();
+
+            Assert.AreEqual(1, jokeViewModel.Jokes.Count);
+            Assert.AreEqual("There is 1 joke(s)", jokeViewModel.NbJokesLabel);
+            Assert.AreEqual("This list is sorted by [Z-A]", jokeViewModel.Title);
         }
     }
 }
